@@ -1,0 +1,39 @@
+syntax = "proto2";
+package protocol;
+
+message Msg_C2S {
+    required ProtoId protoId 		= 1; //协议号
+    required string token 			= 2; 
+	optional SystemHeart heart		= 3; // 心跳
+}
+
+message Msg_S2C {
+    required ProtoId protoId 		= 1; // 协议Id  
+	optional ErrorCode errorCode 	= 2; // 错误码
+}
+
+// @{enum} 协议Id
+enum ProtoId {
+    SYSTEM_HEART 		= 10001; //心跳
+    SYSTEM_ERROR_S2C 	= 10002; //系统错误 
+}
+
+// @{enum} 错误码
+enum ErrorCode {
+    ERROR_TOKEN 				= 5000; 	// token不存在
+    ERROR_PROTO_ID 				= 5001; 	// protoId不存在
+    ERROR_SERVER 				= 5002; 	// 服务器错误
+    ERROR_MISSING_PROTO_C2S 	= 5003; 	// proto传过来的参数缺失
+}
+
+//--------SYSTEM------------------------------------
+
+// @{10001} 心跳包
+message SystemHeart {
+}
+
+// @{10002} 系统错误
+message SystemError_S2C {
+    required int32 code = 1;
+}
+    
